@@ -2,13 +2,58 @@ const express = require('express')
 const path = require('path');
 const app = express()
 const cors = require('cors')
+// const http = require('http');
+
+// const server = http.createServer(app);
+
+const socketIo = require('socket.io');
+
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   next();
+// });
+
 app.use(cors())
 
+// app.use(cors({
+//     origin: 'http://localhost:3000'
+//   }))
+  
 app.use(express.json())
 
-app.listen(3003, () => {
+const server = app.listen(3003, () => {
   console.log('running on port 3003')
 })
+
+const io = socketIo(server)
+
+app.use('/socket.io', express.static(__dirname + '/node_modules/socket.io-client/dist/', {
+  setHeaders: (res, path) => {
+    res.setHeader('Content-Type', 'application/javascript');
+  }
+}));
+
+io.on('connection', (socket) => {
+  console.log('Usuário conectado');
+
+  // Envie uma mensagem para o cliente
+  socket.broadcast.emit('message', 'Olá, mundo!');
+
+  // Desconexão do socket.io
+  // socket.on('disconnect', () => {
+  //   console.log('Usuário desconectado');
+  // });
+
+  // socket.on('receive', (receive) => {
+  //   console.log(receive);
+  // });
+
+
+});
+
+
 
 var requests = []
 
