@@ -2,6 +2,8 @@ const express = require('express')
 const http = require('http')
 // const socketIo = require('socket.io')
 
+
+
 const PORT = 4000
 
 const app = express()
@@ -14,7 +16,7 @@ server.listen(PORT, () => console.log(`listening server on port ${PORT}`))
 
 const io = require("socket.io")(server, {
   cors: {
-    origin: "https://menu-web-blush.vercel.app",
+    origin: "*",
     methods: ["GET", "POST"]
   }
 });
