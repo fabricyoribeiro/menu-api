@@ -38,6 +38,9 @@ const proxy = new Proxy(requests, {
 io.on('connection', socket => {
   console.log('Novo usuario conectado')
 
+  io.sockets.emit('request', requests)
+
+
   socket.on('request', (data) => {
 
     var status = true
@@ -70,8 +73,8 @@ io.on('connection', socket => {
     })
   })
 
-  socket.on('disconnect', () => {
-    console.log('usuario desconectado')
-  })
+  // socket.on('disconnect', () => {
+  //   console.log('usuario desconectado')
+  // })
 })
 
