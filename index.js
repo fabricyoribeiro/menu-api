@@ -14,7 +14,7 @@ server.listen(PORT, () => console.log(`listening server on port ${PORT}`))
 
 const io = require("socket.io")(server, {
   cors: {
-    origin: "https://menu-web-blush.vercel.app/",
+    origin: "https://menu-web-blush.vercel.app",
     methods: ["GET", "POST"]
   }
 });
